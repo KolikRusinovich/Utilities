@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Utilties.Models;
+using Microsoft.EntityFrameworkCore;
+using Utilities.Services;
 
-namespace Utilities
+namespace Utilties
 {
     public class Startup
     {
@@ -21,6 +24,9 @@ namespace Utilities
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<UtilitiesContext>(options => options.UseSqlServer(connection));
+            //services.AddTransient<ReadingService>();
             services.AddMvc();
         }
 
