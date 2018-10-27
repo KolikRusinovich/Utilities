@@ -4,11 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Utilties.Models;
-using Microsoft.Extensions.Configuration;
-using Utilties.ViewModels;
+using Utilities.Models;
+using Utilities.ViewModels;
 
-namespace Utilties.Controllers
+namespace Utilities.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,7 +18,7 @@ namespace Utilties.Controllers
             _db = db;
         }
 
-      public IActionResult Index()
+        public IActionResult Index()
         {
             //var readings = _db.Readings.Take(10).ToList();
             var tenants = _db.Tenants.Take(10).ToList();

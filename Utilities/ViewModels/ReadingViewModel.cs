@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Utilties.ViewModels
+namespace Utilities.ViewModels
 {
     public class ReadingViewModel
     {
+        [Display(Name = "Код показания")]
         public int ReadingId { get; set; }
 
         [Display(Name = "Фамилия квартиросъёмщика")]
@@ -26,8 +27,8 @@ namespace Utilties.ViewModels
         [Display(Name = "Показания")]
         public int Indications { get; set; }
 
-        [Display(Name = "Дата")]
+        [Display(Name = "Дата снятия показаний")]
+        [DataType(DataType.Date)]
         public DateTime DateOfReading { get; set; }
-
     }
 }

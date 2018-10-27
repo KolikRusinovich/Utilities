@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Utilities.Models.Tenant>
+@{
+    ViewData["Title"] = "Квартиросъёмщики";
+}
+<table border="1" cellspacing="100">
+    <caption>Квартиросъёмщики</caption>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.TenantId)</th>
+        <th>@Html.DisplayNameFor(model => model.NameOfTenant)</th>
+        <th>@Html.DisplayNameFor(model => model.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.Patronymic)</th>
+        <th>@Html.DisplayNameFor(model => model.ApartmentNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.NumberOfPeople)</th>
+        <th>@Html.DisplayNameFor(model => model.TotalArea)</th>
+    </tr>
+    @foreach (var tenant in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => tenant.TenantId)</td>
+            <td>@Html.DisplayFor(modelItem => tenant.NameOfTenant)</td>
+            <td>@Html.DisplayFor(modelItem => tenant.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => tenant.Patronymic)</td>
+            <td>@Html.DisplayFor(modelItem => tenant.ApartmentNumber)</td>
+            <td>@Html.DisplayFor(modelItem => tenant.NumberOfPeople)</td>
+            <td>@Html.DisplayFor(modelItem => tenant.TotalArea)</td>
+        </tr>
+    }
+</table>

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace Utilties.Models
+
+namespace Utilities.Models
 {
     public class UtilitiesContext : DbContext
     {
@@ -18,6 +17,5 @@ namespace Utilties.Models
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Reading> Readings { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
     }
 }

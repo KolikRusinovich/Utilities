@@ -1,0 +1,24 @@
+﻿@model Utilities.ViewModels.PaymentsViewModel
+@{
+    ViewData["Title"] = "Платежи";
+}
+<table border="1" cellspacing="100">
+    <caption>Платежи</caption>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.PaymentViewModel.PaymentId)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentViewModel.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentViewModel.Type)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentViewModel.Sum)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentViewModel.DateOfPayment)</th>
+    </tr>
+    @foreach (var payment in Model.Payments)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => payment.PaymentId)</td>
+            <td>@Html.DisplayFor(modelItem => payment.Tenant.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => payment.Rate.Type)</td>
+            <td>@Html.DisplayFor(modelItem => payment.Sum)</td>
+            <td>@Html.DisplayFor(modelItem => payment.DateOfPayment)</td>
+        </tr>
+    }
+</table>

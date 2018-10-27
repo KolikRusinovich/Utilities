@@ -1,0 +1,28 @@
+﻿@model Utilities.ViewModels.ReadingsViewModel
+@{
+    ViewData["Title"] = "Показания";
+}
+<table border="1" cellspacing="100">
+    <caption>Показания</caption>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.ReadingId)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Apartmentnumber)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Type)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.CounterNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Indications)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.DateOfReading)</th>
+    </tr>
+    @foreach (var reading in Model.Readings)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => reading.ReadingId)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Tenant.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Apartmentnumber)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Rate.Type)</td>
+            <td>@Html.DisplayFor(modelItem => reading.CounterNumber)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Indications)</td>
+            <td>@Html.DisplayFor(modelItem => reading.DateOfReading)</td>
+        </tr>
+    }
+</table>
