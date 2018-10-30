@@ -1,31 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Utilities.Data;
 using Utilities.Models;
 
 namespace Utilities.Middleware
 {
-    /*public class DbInitializerMiddleware
+    public class DbInitializerMiddleware
     {
         private readonly RequestDelegate _next;
         public DbInitializerMiddleware(RequestDelegate next)
         {
-            // инициализация базы данных по университетам
             _next = next;
 
         }
-        public Task Invoke(HttpContext context, IServiceProvider serviceProvider, UtilitiesContext dbContext)
+        public Task Invoke(HttpContext context, UtilitiesContext dbContext)
         {
-            if (!(context.Session.Keys.Contains("starting")))
-            {
-                DbInitializer.Initialize(dbContext);
-                context.Session.SetString("starting", "Yes");
-            }
-
-            // Call the next delegate/middleware in the pipeline
+            DbInitializer.Initialize(dbContext);
             return _next.Invoke(context);
+
         }
     }
     public static class DbInitializerExtensions
@@ -34,6 +30,5 @@ namespace Utilities.Middleware
         {
             return builder.UseMiddleware<DbInitializerMiddleware>();
         }
-
-    }*/
+    }
 }

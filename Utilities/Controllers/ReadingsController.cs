@@ -28,7 +28,7 @@ namespace Utilities.Controllers
             var readingContext = context.Readings.Include(p => p.Tenant).Include(p => p.Rate);
             ReadingsViewModel readings = new ReadingsViewModel
             {
-                Readings = readingContext.Take(10).ToList(),
+                Readings = readingContext.Take(50).ToList(),
                 ReadingViewModel = _reading
             };
             return View(readings);

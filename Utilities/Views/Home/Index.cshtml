@@ -1,28 +1,32 @@
 ﻿@model Utilities.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "Показания";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <table border="1" cellspacing="100">
-    <caption>Показания</caption>
-    <tr>
-        <th>Код показания</th>
-        <th>Фамилия</th>
-        <th>Квартира</th>
-        <th>Счётчик</th>
-        <th>Номер счётчика</th>
-        <th>Показания</th>
-        <th>Дата</th>
-    </tr>
-    @foreach (var reading in Model.Readings)
-    {
-    <tr>
-        <td>@reading.ReadingId</td>
-        <td>@reading.Surname</td>
-        <td>@reading.Apartmentnumber</td>
-        <td>@reading.Type</td>
-        <td>@reading.CounterNumber</td>
-        <td>@reading.Indications</td>
-        <td>@reading.DateOfReading.ToShortDateString()</td>
-    </tr>
-    }
+    <thead>
+        <tr>
+            <th>Код показания</th>
+            <th>Фамилия</th>
+            <th>Квартира</th>
+            <th>Счётчик</th>
+            <th>Номер счётчика</th>
+            <th>Показания</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reading in Model.Readings)
+        {
+        <tr>
+            <td>@reading.ReadingId</td>
+            <td>@reading.Surname</td>
+            <td>@reading.Apartmentnumber</td>
+            <td>@reading.Type</td>
+            <td>@reading.CounterNumber</td>
+            <td>@reading.Indications</td>
+            <td>@reading.DateOfReading.ToShortDateString()</td>
+        </tr>
+        }
+     </tbody>
 </table>

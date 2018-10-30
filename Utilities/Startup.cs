@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Utilities.Middleware;
 using Utilities.Models;
 
 namespace Utilities
@@ -41,9 +42,13 @@ namespace Utilities
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+           // app.UseSession();
+           
+           
+            //app.UseToken(12345678);
 
             app.UseStaticFiles();
-
+            app.UseDbInitializer();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

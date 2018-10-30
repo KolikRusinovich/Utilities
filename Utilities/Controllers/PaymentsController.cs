@@ -27,7 +27,7 @@ namespace Utilities.Controllers
             var paymentContext = context.Payments.Include(p => p.Tenant).Include(p => p.Rate);
             PaymentsViewModel payments = new PaymentsViewModel
             {
-                Payments = paymentContext.Take(10).ToList(),
+                Payments = paymentContext.Take(50).ToList(),
                 PaymentViewModel = _payment
             };
             return View(payments);

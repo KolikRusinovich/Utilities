@@ -24,6 +24,7 @@ namespace Utilities.ViewModels
         [Display(Name = "Номер счётчика")]
         public int CounterNumber { get; set; }
 
+		
         [Display(Name = "Показания")]
         public int Indications { get; set; }
 
