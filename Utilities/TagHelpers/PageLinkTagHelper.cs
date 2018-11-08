@@ -24,6 +24,9 @@ namespace Utilities.TagHelpers
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
 
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
@@ -42,6 +45,8 @@ namespace Utilities.TagHelpers
                 TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper);
                 tag.InnerHtml.AppendHtml(prevItem);
             }
+            else if(PageModel.TotalPages == 1)
+            { }
             else
             {
                 TagBuilder prevItem = CreateTag(PageModel.TotalPages, urlHelper);
@@ -55,6 +60,8 @@ namespace Utilities.TagHelpers
                 TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper);
                 tag.InnerHtml.AppendHtml(nextItem);
             }
+            else if (PageModel.TotalPages == 1)
+            { }
             else
             {
                 TagBuilder nextItem = CreateTag(1, urlHelper);
