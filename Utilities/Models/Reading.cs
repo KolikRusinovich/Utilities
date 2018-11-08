@@ -11,11 +11,11 @@ namespace Utilities.Models
         [Key]
         [Display(Name = "Код показания")]
         public int ReadingId { get; set; }
-        [Display(Name = "Код квартиросъёмщика")]
+        [Display(Name = "Фамилия квартиросъёмщика")]
         public int TenantId { get; set; }
         [Display(Name = "Номер квартиры")]
         public int Apartmentnumber { get; set; }
-        [Display(Name = "Код счётчика")]
+        [Display(Name = "Название счётчика")]
         public int RateId { get; set; }
         [Display(Name = "Номер счётчика")]
         public int CounterNumber { get; set; }

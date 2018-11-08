@@ -1,0 +1,50 @@
+﻿@model Utilities.Models.Payment
+
+@{
+    ViewData["Title"] = "CreatePayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreatePayment</h2>
+
+<h4>Payment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePayment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenantId" class="control-label"></label>
+                <select asp-for="TenantId" class="form-control" asp-items="ViewBag.TenantId">
+                    <option>Выберите фамилию квартиросъёмщика</option>
+                </select>
+                <span asp-validation-for="TenantId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RateId" class="control-label"></label>
+                <select asp-for="RateId" class="form-control" asp-items="ViewBag.RateId">
+                    <option>Выберите тип счётчика</option>
+                </select>
+                <span asp-validation-for="RateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sum" class="control-label"></label>
+                <input asp-for="Sum" class="form-control" />
+                <span asp-validation-for="Sum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfPayment" class="control-label"></label>
+                <input asp-for="DateOfPayment" class="form-control" />
+                <span asp-validation-for="DateOfPayment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

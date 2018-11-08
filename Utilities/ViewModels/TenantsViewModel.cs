@@ -6,10 +6,10 @@ using Utilities.Models;
 
 namespace Utilities.ViewModels
 {
-    public class HomeViewModel
+    public class TenantsViewModel
     {
-        public IEnumerable<Reading> Readings { get; set; }
+        public IEnumerable<Tenant> Tenants { get; set; }
+        public Tenant Tenant { get; set; }
         public PageViewModel PageViewModel { get; set; }
-        public ReadingViewModel ReadingViewModel { get; set; }
     }
 }

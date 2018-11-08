@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Utilities.Models;
 using Utilities.ViewModels;
 
@@ -18,16 +19,25 @@ namespace Utilities.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        private ReadingViewModel _reading = new ReadingViewModel
         {
-            //var readings = _db.Readings.Take(10).ToList();
-            var tenants = _db.Tenants.Take(10).ToList();
-            var rates = _db.Rates.Take(10).ToList();
-            List<ReadingViewModel> readings = _db.Readings
-                .Select(t => new ReadingViewModel { ReadingId = t.ReadingId, Surname = t.Tenant.Surname, Apartmentnumber = t.Apartmentnumber, Type = t.Rate.Type, CounterNumber = t.CounterNumber, Indications = t.Indications, DateOfReading = t.DateOfReading })
-                .Take(10)
-                .ToList();
-            HomeViewModel homeViewModel = new HomeViewModel { Tenants = tenants, Rates = rates, Readings = readings };
+            Type = "",
+            Surname = ""
+        };
+
+        public IActionResult Index(int page = 1)
+        {
+            int pageSize = 10;
+            var readingContext = _db.Readings.Include(p => p.Tenant).Include(p => p.Rate);
+            var count = readingContext.Count();
+            var items = readingContext.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            HomeViewModel homeViewModel = new HomeViewModel
+            {
+                Readings = items,
+                ReadingViewModel = _reading,
+                PageViewModel = pageViewModel
+            };
             return View(homeViewModel);
         }
 

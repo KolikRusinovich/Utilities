@@ -1,32 +1,31 @@
-﻿@model Utilities.ViewModels.HomeViewModel
+﻿@using Utilities.ViewModels
+@model HomeViewModel
+@addTagHelper "*, Utilities"
 @{
     ViewData["Title"] = "Показания";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<table border="1" cellspacing="100">
-    <thead>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.ReadingId)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Apartmentnumber)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Type)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.CounterNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Indications)</th>
+        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.DateOfReading)</th>
+    </tr>
+    @foreach (var reading in Model.Readings)
+    {
         <tr>
-            <th>Код показания</th>
-            <th>Фамилия</th>
-            <th>Квартира</th>
-            <th>Счётчик</th>
-            <th>Номер счётчика</th>
-            <th>Показания</th>
-            <th>Дата</th>
+            <td>@Html.DisplayFor(modelItem => reading.ReadingId)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Tenant.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Apartmentnumber)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Rate.Type)</td>
+            <td>@Html.DisplayFor(modelItem => reading.CounterNumber)</td>
+            <td>@Html.DisplayFor(modelItem => reading.Indications)</td>
+            <td>@Html.DisplayFor(modelItem => reading.DateOfReading)</td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var reading in Model.Readings)
-        {
-        <tr>
-            <td>@reading.ReadingId</td>
-            <td>@reading.Surname</td>
-            <td>@reading.Apartmentnumber</td>
-            <td>@reading.Type</td>
-            <td>@reading.CounterNumber</td>
-            <td>@reading.Indications</td>
-            <td>@reading.DateOfReading.ToShortDateString()</td>
-        </tr>
-        }
-     </tbody>
+    }
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>

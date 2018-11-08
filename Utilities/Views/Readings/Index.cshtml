@@ -1,9 +1,11 @@
-﻿@model Utilities.ViewModels.ReadingsViewModel
+﻿@using Utilities.ViewModels
+@model ReadingsViewModel
+@addTagHelper "*, Utilities"
 @{
     ViewData["Title"] = "Показания";
 }
-<table border="1" cellspacing="100">
-    <caption>Показания</caption>
+@Html.ActionLink("Create", "CreateReading")
+<table class="table">
     <tr>
         <th>@Html.DisplayNameFor(model => model.ReadingViewModel.ReadingId)</th>
         <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Surname)</th>
@@ -24,5 +26,10 @@
             <td>@Html.DisplayFor(modelItem => reading.Indications)</td>
             <td>@Html.DisplayFor(modelItem => reading.DateOfReading)</td>
         </tr>
+        <td>
+            @Html.ActionLink("Edit", "EditReading", new { id = reading.ReadingId }, null) |
+            @Html.ActionLink("Delete", "DeleteReading", new { id = reading.ReadingId }, null)
+        </td>
     }
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>

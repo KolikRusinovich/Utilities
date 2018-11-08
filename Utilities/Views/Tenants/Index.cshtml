@@ -1,19 +1,21 @@
-﻿@model IEnumerable<Utilities.Models.Tenant>
+﻿@using Utilities.ViewModels
+@model TenantsViewModel
+@addTagHelper "*, Utilities"
 @{
     ViewData["Title"] = "Квартиросъёмщики";
 }
-<table border="1" cellspacing="100">
-    <caption>Квартиросъёмщики</caption>
+@Html.ActionLink("Create", "CreateTenant")
+<table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.TenantId)</th>
-        <th>@Html.DisplayNameFor(model => model.NameOfTenant)</th>
-        <th>@Html.DisplayNameFor(model => model.Surname)</th>
-        <th>@Html.DisplayNameFor(model => model.Patronymic)</th>
-        <th>@Html.DisplayNameFor(model => model.ApartmentNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.NumberOfPeople)</th>
-        <th>@Html.DisplayNameFor(model => model.TotalArea)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.TenantId)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.NameOfTenant)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.Surname)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.Patronymic)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.ApartmentNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.NumberOfPeople)</th>
+        <th>@Html.DisplayNameFor(model => model.Tenant.TotalArea)</th>
     </tr>
-    @foreach (var tenant in Model)
+    @foreach (var tenant in Model.Tenants)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => tenant.TenantId)</td>
@@ -23,6 +25,11 @@
             <td>@Html.DisplayFor(modelItem => tenant.ApartmentNumber)</td>
             <td>@Html.DisplayFor(modelItem => tenant.NumberOfPeople)</td>
             <td>@Html.DisplayFor(modelItem => tenant.TotalArea)</td>
+            <td>
+                @Html.ActionLink("Edit", "EditTenant", new { id = tenant.TenantId }, null) |
+                @Html.ActionLink("Delete", "DeleteTenant", new { id = tenant.TenantId })
+            </td>
         </tr>
     }
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>

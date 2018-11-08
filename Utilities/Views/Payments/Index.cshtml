@@ -1,9 +1,12 @@
-﻿@model Utilities.ViewModels.PaymentsViewModel
+﻿@using Utilities.ViewModels
+@model PaymentsViewModel
+@addTagHelper "*, Utilities"
 @{
     ViewData["Title"] = "Платежи";
 }
-<table border="1" cellspacing="100">
-    <caption>Платежи</caption>
+
+@Html.ActionLink("Create", "CreatePayment")
+<table class="table">
     <tr>
         <th>@Html.DisplayNameFor(model => model.PaymentViewModel.PaymentId)</th>
         <th>@Html.DisplayNameFor(model => model.PaymentViewModel.Surname)</th>
@@ -19,6 +22,11 @@
             <td>@Html.DisplayFor(modelItem => payment.Rate.Type)</td>
             <td>@Html.DisplayFor(modelItem => payment.Sum)</td>
             <td>@Html.DisplayFor(modelItem => payment.DateOfPayment)</td>
+            <td>
+                @Html.ActionLink("Edit", "EditPayment", new { id = payment.PaymentId }, null) |
+                @Html.ActionLink("Delete", "DeletePayment", new { id = payment.PaymentId }, null)
+            </td>
         </tr>
     }
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>

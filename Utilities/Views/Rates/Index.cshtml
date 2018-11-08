@@ -1,22 +1,30 @@
-﻿@model IEnumerable<Utilities.Models.Rate>
+﻿@using Utilities.ViewModels
+@model RatesViewModel
+@addTagHelper "*, Utilities"
 @{
     ViewData["Title"] = "Счётчики";
 }
-<table border="1" cellspacing="100">
-    <caption>Счётчики</caption>
+@Html.ActionLink("Create", "CreateRate")
+<table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.RateId)</th>
-        <th>@Html.DisplayNameFor(model => model.Type)</th>
-        <th>@Html.DisplayNameFor(model => model.Value)</th>
-        <th>@Html.DisplayNameFor(model => model.DateOfIntroduction)</th>
+        <th>@Html.DisplayNameFor(model => model.Rate.RateId)</th>
+        <th>@Html.DisplayNameFor(model => model.Rate.Type)</th>
+        <th>@Html.DisplayNameFor(model => model.Rate.Value)</th>
+        <th>@Html.DisplayNameFor(model => model.Rate.DateOfIntroduction)</th>
     </tr>
-    @foreach (var rate in Model)
+    @foreach (var rate in Model.Rates)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => rate.RateId)</td>
             <td>@Html.DisplayFor(modelItem => rate.Type)</td>
             <td>@Html.DisplayFor(modelItem => rate.Value)</td>
             <td>@Html.DisplayFor(modelItem => rate.DateOfIntroduction)</td>
+            <td>
+                @Html.ActionLink("Edit", "EditRate", new { id = rate.RateId }, null) |
+                @Html.ActionLink("Delete", "DeleteRate", new { id = rate.RateId }, null)
+            </td>
         </tr>
+
     }
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>

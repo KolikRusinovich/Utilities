@@ -1,0 +1,63 @@
+﻿@model Utilities.ViewModels.ReadingsViewModel
+
+@{
+    ViewData["Title"] = "DeleteReading";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DeleteReading</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ReadingViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Readings.First().ReadingId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Readings.First().ReadingId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReadingViewModel.Surname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReadingViewModel.Surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Readings.First().Apartmentnumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Readings.First().Apartmentnumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReadingViewModel.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReadingViewModel.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Readings.First().CounterNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Readings.First().CounterNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Readings.First().Indications)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Readings.First().Indications)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Readings.First().DateOfReading)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Readings.First().DateOfReading)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteReading">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

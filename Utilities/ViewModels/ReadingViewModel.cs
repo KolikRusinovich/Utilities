@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Utilities.ViewModels
 {
@@ -31,5 +32,6 @@ namespace Utilities.ViewModels
         [Display(Name = "Дата снятия показаний")]
         [DataType(DataType.Date)]
         public DateTime DateOfReading { get; set; }
+
     }
 }

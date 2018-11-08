@@ -1,0 +1,61 @@
+﻿@model Utilities.ViewModels.ReadingsViewModel
+
+@{
+    ViewData["Title"] = "EditReading";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditReading</h2>
+
+<h4>ReadingViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditReading">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Readings.First().ReadingId" class="control-label"></label>
+                <input asp-for="Readings.First().ReadingId" class="form-control" readonly/>
+                <span asp-validation-for="Readings.First().ReadingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Readings.First().TenantId" class="control-label"></label>
+                <select asp-for="Readings.First().TenantId" class="form-control" asp-items="Model.TenantsList"></select>
+                <span asp-validation-for="Readings.First().TenantId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Readings.First().Apartmentnumber" class="control-label"></label>
+                <input asp-for="Readings.First().Apartmentnumber" class="form-control" />
+                <span asp-validation-for="Readings.First().Apartmentnumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Readings.First().RateId" class="control-label"></label>
+                <select asp-for="Readings.First().RateId" class="form-control" asp-items="Model.RatesList"></select>
+                <span asp-validation-for="Readings.First().RateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Readings.First().CounterNumber" class="control-label"></label>
+                <input asp-for="Readings.First().CounterNumber" class="form-control" />
+                <span asp-validation-for="Readings.First().CounterNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Readings.First().Indications" class="control-label"></label>
+                <input asp-for="Readings.First().Indications" class="form-control" />
+                <span asp-validation-for="Readings.First().Indications" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Readings.First().DateOfReading" class="control-label"></label>
+                <input asp-for="Readings.First().DateOfReading" class="form-control" />
+                <span asp-validation-for="Readings.First().DateOfReading" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
