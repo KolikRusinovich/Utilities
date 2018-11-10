@@ -45,7 +45,7 @@ namespace Utilities.TagHelpers
                 TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper);
                 tag.InnerHtml.AppendHtml(prevItem);
             }
-            else if(PageModel.TotalPages == 1)
+            else if(PageModel.TotalPages == 1 || PageModel.TotalPages == 0)
             { }
             else
             {
@@ -60,7 +60,7 @@ namespace Utilities.TagHelpers
                 TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper);
                 tag.InnerHtml.AppendHtml(nextItem);
             }
-            else if (PageModel.TotalPages == 1)
+            else if (PageModel.TotalPages == 1 || PageModel.TotalPages == 0)
             { }
             else
             {

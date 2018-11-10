@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Models;
 using Utilities.ViewModels;
+using Utilities.ViewModels.PaymentsViewModels;
 
 namespace Utilities.Controllers
 {
@@ -23,18 +24,63 @@ namespace Utilities.Controllers
         {
             this.context = context;
         }
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "20.01.3001", int page = 1, SortState sortOrder = SortState.PaymentsIdAsc)
         {
+            DateTime first = Convert.ToDateTime(firstDate);
+            DateTime second = Convert.ToDateTime(secondDate);
             int pageSize = 10;
-            var paymentContext = context.Payments.Include(p => p.Tenant).Include(p => p.Rate);
-            var count = paymentContext.Count();
-            var items = paymentContext.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            IQueryable<Payment> source = context.Payments.Include(p => p.Tenant).Include(p => p.Rate);
+            if (tenant != null && tenant != 0)
+                source = source.Where(p => p.TenantId == tenant);
+            if (rate != null && rate != 0)
+                source = source.Where(p => p.RateId == rate);
+            if (firstDate != null || secondDate != null)
+            {
+                source = source.Where(p => p.DateOfPayment >= first && p.DateOfPayment <= second);
+            }
+            switch (sortOrder)
+            {
+                case SortState.PaymentsIdDesc:
+                    source = source.OrderByDescending(s => s.PaymentId);
+                    break;
+                case SortState.SurameOfTenantAsc:
+                    source = source.OrderBy(s => s.Tenant.Surname);
+                    break;
+                case SortState.SurnameOfTenantDesc:
+                    source = source.OrderByDescending(s => s.Tenant.Surname);
+                    break;
+                case SortState.TypeOfRateAsc:
+                    source = source.OrderBy(s => s.Rate.Type);
+                    break;
+                case SortState.TypeOfRateDesc:
+                    source = source.OrderByDescending(s => s.Rate.Type);
+                    break;
+                case SortState.PaymentsSumAsc:
+                    source = source.OrderBy(s => s.Sum);
+                    break;
+                case SortState.PaymentsSumDesc:
+                    source = source.OrderByDescending(s => s.Sum);
+                    break;
+                case SortState.DateOfPaymentsAsc:
+                    source = source.OrderBy(s => s.DateOfPayment);
+                    break;
+                case SortState.DateOfPaymentsDesc:
+                    source = source.OrderByDescending(s => s.DateOfPayment);
+                    break;
+                default:
+                    source = source.OrderBy(s => s.PaymentId);
+                    break;
+            }
+            var count = source.Count();
+            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             PaymentsViewModel payments = new PaymentsViewModel
             {
                 Payments = items,
                 PaymentViewModel = _payment,
-                PageViewModel = pageViewModel
+                PageViewModel = pageViewModel,
+                SortViewModel = new PaymentsSortViewModel(sortOrder),
+                FilterViewModel = new PaymentsFilterViewModel(context.Tenants.ToList(), context.Rates.ToList(), tenant, rate, first, second)
             };
             return View(payments);
         }

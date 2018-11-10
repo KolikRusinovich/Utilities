@@ -5,31 +5,93 @@
     ViewData["Title"] = "Показания";
 }
 @Html.ActionLink("Create", "CreateReading")
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Фамилия: </label>
+        @Html.DropDownList("tenant", Model.FilterViewModel.Tenants as SelectList, htmlAttributes: new { @class = "form-control" })
+
+        <label class="control-label">Тип: </label>
+        @Html.DropDownList("rate", Model.FilterViewModel.Rates as SelectList, htmlAttributes: new { @class = "form-control" })
+
+        <label class="control-label">Первая дата: </label>
+        @Html.TextBox("firstDate", Model.FilterViewModel.SelectedFirstDate, htmlAttributes: new { @class = "form-control", @type = "date" })
+        <label class="control-label">вторая дата: </label>
+        @Html.TextBox("secondDate", Model.FilterViewModel.SelectedSecondDate, htmlAttributes: new { @class = "form-control", @type = "date" })
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.ReadingId)</th>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Surname)</th>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Apartmentnumber)</th>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Type)</th>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.CounterNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.Indications)</th>
-        <th>@Html.DisplayNameFor(model => model.ReadingViewModel.DateOfReading)</th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.ReadingIdSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.ReadingId)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.SurnameSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.Surname)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.ApartmentNumberSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.Apartmentnumber)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.TypeSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.Type)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.CounterNumberSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.CounterNumber)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.IndicationsSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.Indications)</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateSort)"
+               asp-route-surname="@(Model.FilterViewModel.SelectedTenant)"
+               asp-route-rate="@(Model.FilterViewModel.SelectedRate)"
+               asp-route-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+               asp-route-seconddate="@(Model.FilterViewModel.SelectedSecondDate)">@Html.DisplayNameFor(model => model.ReadingViewModel.DateOfReading)</a>
+        </th>
     </tr>
     @foreach (var reading in Model.Readings)
     {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => reading.ReadingId)</td>
-            <td>@Html.DisplayFor(modelItem => reading.Tenant.Surname)</td>
-            <td>@Html.DisplayFor(modelItem => reading.Apartmentnumber)</td>
-            <td>@Html.DisplayFor(modelItem => reading.Rate.Type)</td>
-            <td>@Html.DisplayFor(modelItem => reading.CounterNumber)</td>
-            <td>@Html.DisplayFor(modelItem => reading.Indications)</td>
-            <td>@Html.DisplayFor(modelItem => reading.DateOfReading)</td>
-        </tr>
+    <tr>
+        <td>@Html.DisplayFor(modelItem => reading.ReadingId)</td>
+        <td>@Html.DisplayFor(modelItem => reading.Tenant.Surname)</td>
+        <td>@Html.DisplayFor(modelItem => reading.Apartmentnumber)</td>
+        <td>@Html.DisplayFor(modelItem => reading.Rate.Type)</td>
+        <td>@Html.DisplayFor(modelItem => reading.CounterNumber)</td>
+        <td>@Html.DisplayFor(modelItem => reading.Indications)</td>
+        <td>@Html.DisplayFor(modelItem => reading.DateOfReading)</td>
         <td>
             @Html.ActionLink("Edit", "EditReading", new { id = reading.ReadingId }, null) |
             @Html.ActionLink("Delete", "DeleteReading", new { id = reading.ReadingId }, null)
         </td>
+    </tr>
     }
 </table>
-<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-surname="@(Model.FilterViewModel.SelectedTenant)"
+           page-url-rate="@(Model.FilterViewModel.SelectedRate)"
+           page-url-firstdate="@(Model.FilterViewModel.SelectedFirstDate)"
+           page-url-seconddate="@(Model.FilterViewModel.SelectedSecondDate)"
+           page-url-sortorder="@(Model.SortViewModel.Current)"></page-link>

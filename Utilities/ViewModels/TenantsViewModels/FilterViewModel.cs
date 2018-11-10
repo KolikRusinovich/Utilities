@@ -9,10 +9,8 @@ namespace Utilities.ViewModels
 {
     public class FilterViewModel
     {
-        public FilterViewModel(List<Tenant> tenants, string name,string surname, string patronymic)
+        public FilterViewModel(string name,string surname, string patronymic)
         {
-            // устанавливаем начальный элемент, который позволит выбрать всех
-            tenants.Insert(0, new Tenant { NameOfTenant = "Все", Surname = "Все", Patronymic = "Все", TenantId = 0 });
             SelectedName = name;
             SelectedSurname = surname;
             SelectedPatronymic = patronymic;

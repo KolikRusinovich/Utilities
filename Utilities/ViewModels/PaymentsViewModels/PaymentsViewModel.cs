@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Utilities.Models;
+using Utilities.ViewModels.PaymentsViewModels;
 
 namespace Utilities.ViewModels
 {
@@ -14,5 +15,7 @@ namespace Utilities.ViewModels
         public PageViewModel PageViewModel { get; set; }
         public SelectList TenantsList { get; set; }
         public SelectList RatesList { get; set; }
+        public PaymentsFilterViewModel FilterViewModel { get; set; }
+        public PaymentsSortViewModel SortViewModel { get; set; }
     }
 }

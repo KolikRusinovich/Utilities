@@ -87,7 +87,7 @@ namespace Utilities.Controllers
                 Tenants = items,
                 PageViewModel = pageViewModel,
                 SortViewModel = new SortViewModel(sortOrder),
-                FilterViewModel = new FilterViewModel(context.Tenants.ToList(), name, surname, patronymic),
+                FilterViewModel = new FilterViewModel(name, surname, patronymic),
             };
             return View(tenants);
         }
