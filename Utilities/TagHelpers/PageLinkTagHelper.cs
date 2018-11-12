@@ -80,7 +80,8 @@ namespace Utilities.TagHelpers
             }
             else
             {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber });
+                PageUrlValues["page"] = pageNumber;
+                link.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
             }
             link.InnerHtml.Append(pageNumber.ToString());
             item.InnerHtml.AppendHtml(link);

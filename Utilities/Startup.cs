@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utilities.Middleware;
 using Utilities.Models;
+using Utilities.Services;
 
 namespace Utilities
 {
@@ -27,6 +28,10 @@ namespace Utilities
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UtilitiesContext>(options => options.UseSqlServer(connection));
             //services.AddTransient<ReadingService>();
+            services.AddTransient<TenantService>();
+            services.AddTransient<ReadingService>();
+            // добавление кэширования
+            services.AddMemoryCache();
             services.AddMvc();
         }
 

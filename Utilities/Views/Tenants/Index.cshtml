@@ -22,13 +22,13 @@
     <tr>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.TenantIdSort)"
-               asp-route-id="@(Model.FilterViewModel.SelectedName)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-surname="@(Model.FilterViewModel.SelectedSurname)"
                asp-route-patronymic="@(Model.FilterViewModel.SelectedPatronymic)">@Html.DisplayNameFor(model => model.Tenant.TenantId)</a>
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.NameSort)"
-               asp-route-id="@(Model.FilterViewModel.SelectedName)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-surname="@(Model.FilterViewModel.SelectedSurname)"
                asp-route-patronymic="@(Model.FilterViewModel.SelectedPatronymic)">@Html.DisplayNameFor(model => model.Tenant.NameOfTenant)</a>
         </th>
@@ -40,25 +40,25 @@
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.PatronymicSort)"
-               asp-route-id="@(Model.FilterViewModel.SelectedName)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-surname="@(Model.FilterViewModel.SelectedSurname)"
                asp-route-patronymic="@(Model.FilterViewModel.SelectedPatronymic)">@Html.DisplayNameFor(model => model.Tenant.Patronymic)</a>
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.ApartmentNumberSort)"
-               asp-route-id="@(Model.FilterViewModel.SelectedName)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-surname="@(Model.FilterViewModel.SelectedSurname)"
                asp-route-patronymic="@(Model.FilterViewModel.SelectedPatronymic)">@Html.DisplayNameFor(model => model.Tenant.ApartmentNumber)</a>
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.NumberOfPeopleSort)"
-               asp-route-id="@(Model.FilterViewModel.SelectedName)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-surname="@(Model.FilterViewModel.SelectedSurname)"
                asp-route-patronymic="@(Model.FilterViewModel.SelectedPatronymic)">@Html.DisplayNameFor(model => model.Tenant.NumberOfPeople)</a>
         </th>
         <th>
             <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.TotalAreaSort)"
-               asp-route-id="@(Model.FilterViewModel.SelectedName)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-surname="@(Model.FilterViewModel.SelectedSurname)"
                asp-route-patronymic="@(Model.FilterViewModel.SelectedPatronymic)">@Html.DisplayNameFor(model => model.Tenant.TotalArea)</a>
         </th>
@@ -74,7 +74,7 @@
             <td>@Html.DisplayFor(modelItem => tenant.NumberOfPeople)</td>
             <td>@Html.DisplayFor(modelItem => tenant.TotalArea)</td>
             <td>
-                @Html.ActionLink("Edit", "EditTenant", new { id = tenant.TenantId }, null) |
+                @Html.ActionLink("Edit", "EditTenant", new { id = tenant.TenantId}, null) |
                 @Html.ActionLink("Delete", "DeleteTenant", new { id = tenant.TenantId })
             </td>
         </tr>
