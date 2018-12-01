@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -28,8 +29,16 @@ namespace Utilities
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UtilitiesContext>(options => options.UseSqlServer(connection));
             //services.AddTransient<ReadingService>();
+            
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".MyApp.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            });
             services.AddTransient<TenantService>();
             services.AddTransient<ReadingService>();
+            services.AddTransient<RateService>();
             // добавление кэширования
             services.AddMemoryCache();
             services.AddMvc();
@@ -51,8 +60,9 @@ namespace Utilities
            
            
             //app.UseToken(12345678);
-
+            
             app.UseStaticFiles();
+            app.UseSession();
             app.UseDbInitializer();
             app.UseMvc(routes =>
             {

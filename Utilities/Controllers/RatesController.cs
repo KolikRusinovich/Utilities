@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Models;
+using Utilities.Services;
 using Utilities.ViewModels;
 using Utilities.ViewModels.RatesViewModels;
 
@@ -13,63 +14,17 @@ namespace Utilities.Controllers
     public class RatesController : Controller
     {
         private UtilitiesContext context;
+        RateService rateService;
 
-        public RatesController(UtilitiesContext context)
+        public RatesController(UtilitiesContext context,RateService rateService)
         {
             this.context = context;
+            this.rateService = rateService;
         }
 
-        public IActionResult Index(string type, string firstDate = "01.01.0001", string secondDate = "01.01.3001",int page = 1, SortState sortOrder = SortState.RateIdAsc)
+        public IActionResult Index(string type, string firstDate = "01.01.1962" , string secondDate = "01.01.2040",int page = 1, SortState sortOrder = SortState.RateIdAsc, string cacheKey = "NoCache")
         {
-            DateTime first = Convert.ToDateTime(firstDate);
-            DateTime second = Convert.ToDateTime(secondDate);
-            int pageSize = 10;
-            IQueryable<Rate> source = context.Rates;
-            if (!String.IsNullOrEmpty(type))
-            {
-                source = source.Where(p => p.Type.Contains(type));
-            }
-            if (firstDate != null || secondDate != null)
-            {
-                source = source.Where(p => p.DateOfIntroduction >= first && p.DateOfIntroduction <= second);
-            }
-            switch (sortOrder)
-            {
-                case SortState.RateIdDesc:
-                    source = source.OrderByDescending(s => s.RateId);
-                    break;
-                case SortState.TypeOfRateAsc:
-                    source = source.OrderBy(s => s.Type);
-                    break;
-                case SortState.TypeOfRateDesc:
-                    source = source.OrderByDescending(s => s.Type);
-                    break;
-                case SortState.ValueAsc:
-                    source = source.OrderBy(s => s.Value);
-                    break;
-                case SortState.ValueDesc:
-                    source = source.OrderByDescending(s => s.Value);
-                    break;
-                case SortState.DateOfRateAsc:
-                    source = source.OrderBy(s => s.DateOfIntroduction);
-                    break;
-                case SortState.DateOfRateDesc:
-                    source = source.OrderByDescending(s => s.DateOfIntroduction);
-                    break;
-                default:
-                    source = source.OrderBy(s => s.RateId);
-                    break;
-            }
-            var count = source.Count();
-            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            RatesViewModel rates = new RatesViewModel
-            {
-                Rates = items,
-                PageViewModel = pageViewModel,
-                SortViewModel = new RatesSortViewModel(sortOrder),
-                FilterViewModel = new RatesFilterViewModel(type, first, second)
-            };
+            RatesViewModel rates = rateService.GetRates(type, firstDate, secondDate, page, sortOrder, cacheKey);
             return View(rates);
         }
 

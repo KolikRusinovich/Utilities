@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Utilities.Infrastructure;
+using Utilities.Infrastructure.Filtres;
 using Utilities.Models;
 using Utilities.ViewModels;
 using Utilities.ViewModels.PaymentsViewModels;
@@ -24,8 +26,26 @@ namespace Utilities.Controllers
         {
             this.context = context;
         }
-        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "20.01.3001", int page = 1, SortState sortOrder = SortState.PaymentsIdAsc)
+
+        [SetToSession("Payments")]
+        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "01.01.3001", int page = 1, SortState sortOrder = SortState.PaymentsIdAsc)
         {
+            var sessionOrganizations = HttpContext.Session.Get("Payments");
+            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "01.01.3001" && page == 1 && sortOrder == SortState.PaymentsIdAsc)
+            {
+                if (sessionOrganizations.Keys.Contains("tenant"))
+                    tenant = Convert.ToInt32(sessionOrganizations["tenant"]);
+                if (sessionOrganizations.Keys.Contains("rate"))
+                    rate = Convert.ToInt32(sessionOrganizations["rate"]);
+                if (sessionOrganizations.Keys.Contains("firstDate"))
+                    firstDate = sessionOrganizations["firstDate"];
+                if (sessionOrganizations.Keys.Contains("secondDate"))
+                    secondDate = sessionOrganizations["secondDate"];
+                if (sessionOrganizations.Keys.Contains("page"))
+                    page = Convert.ToInt32(sessionOrganizations["page"]);
+                if (sessionOrganizations.Keys.Contains("sortOrder"))
+                    sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+            }
             DateTime first = Convert.ToDateTime(firstDate);
             DateTime second = Convert.ToDateTime(secondDate);
             int pageSize = 10;
@@ -84,6 +104,7 @@ namespace Utilities.Controllers
             };
             return View(payments);
         }
+
 
         [HttpGet]
         public ActionResult EditPayment(int? id)

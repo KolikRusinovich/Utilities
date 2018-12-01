@@ -15,6 +15,8 @@ namespace Utilities.ViewModels.ReadingsViewModels
             rates.Insert(0, new Rate { RateId = 0, Type = "Все" });
             Tenants = new SelectList(tenants, "TenantId", "Surname", tenant);
             Rates = new SelectList(rates, "RateId", "Type", rate);
+            SelectedTenant = tenant;
+            SelectedRate = rate;
             SelectedFirstDate = firstDate;
             SelectedSecondDate = secondDate;
         }
