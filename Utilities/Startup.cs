@@ -39,6 +39,7 @@ namespace Utilities
             services.AddTransient<TenantService>();
             services.AddTransient<ReadingService>();
             services.AddTransient<RateService>();
+            services.AddTransient<PaymentService>();
             // добавление кэширования
             services.AddMemoryCache();
             services.AddMvc();

@@ -46,6 +46,6 @@
     
     <form asp-action="DeletePayment">
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" asp-route-cacheKey="PaymentsCache">Back to List</a>
     </form>
 </div>

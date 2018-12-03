@@ -24,15 +24,15 @@ namespace Utilities.Services
         {
             TenantsViewModel tenants = null;
             myKey = myKey + name + surname + patronymic + page + sortOrder;
-            if (cacheKey != "Cache")
-            {
+            //if (cacheKey != "TenantsCache")
+            //{
                 if (lastKey != myKey)
                 {
-                    cache.Remove("Cache");
-                    cacheKey = "Cache";
+                    cache.Remove("TenantsCache");
+                    cacheKey = "TenantsCache";
                 }
-                else cacheKey = "NoCache";
-            }
+                //else cacheKey = "NoCache";
+            //}
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out tenants))
             {
@@ -109,7 +109,7 @@ namespace Utilities.Services
                 };
                 if (tenants != null)
                 {
-                    cache.Set("Cache", tenants,
+                    cache.Set("TenantsCache", tenants,
                         new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
                 }
             }

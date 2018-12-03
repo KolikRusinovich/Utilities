@@ -26,15 +26,15 @@ namespace Utilities.Services
         {
             ReadingsViewModel readings = null;
             myKey = myKey + tenant + rate + firstDate + secondDate + page + sortOrder;
-            if (cacheKey != "Cache")
-            {
+           /* if (cacheKey != "ReadingsCache")
+            {*/
                 if (lastKey != myKey)
                 {
-                    cache.Remove("Cache");
-                    cacheKey = "Cache";
+                    cache.Remove("ReadingsCache");
+                    cacheKey = "ReadingsCache";
                 }
-                else cacheKey = "NoCache";
-            }
+               // else cacheKey = "NoCache";
+            //}
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out readings))
             {
@@ -113,7 +113,7 @@ namespace Utilities.Services
                 };
                 if (readings != null)
                 {
-                    cache.Set("Cache", readings,
+                    cache.Set("ReadingsCache", readings,
                         new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
                 }
             }

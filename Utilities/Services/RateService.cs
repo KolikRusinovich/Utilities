@@ -26,15 +26,15 @@ namespace Utilities.Services
         {
             RatesViewModel rates = null;
             myKey = type + firstDate + secondDate + page + sortOrder;
-            if (cacheKey != "Cache")
-            {
+            /*if (cacheKey != "RateCache")
+            {*/
                 if (lastKey != myKey)
                 {
-                    cache.Remove("Cache");
-                    cacheKey = "Cache";
+                    cache.Remove("RateCache");
+                    cacheKey = "RateCache";
                 }
-                else cacheKey = "NoCache";
-            }
+                //else cacheKey = "NoCache";
+            //}
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out rates))
             {
@@ -90,7 +90,7 @@ namespace Utilities.Services
                 };
                 if (rates != null)
                 {
-                    cache.Set("Cache", rates,
+                    cache.Set("RateCache", rates,
                         new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
                 }
             }

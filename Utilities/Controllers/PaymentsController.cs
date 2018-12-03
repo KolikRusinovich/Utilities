@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Utilities.Infrastructure;
 using Utilities.Infrastructure.Filtres;
 using Utilities.Models;
+using Utilities.Services;
 using Utilities.ViewModels;
 using Utilities.ViewModels.PaymentsViewModels;
 
@@ -16,22 +17,28 @@ namespace Utilities.Controllers
     public class PaymentsController : Controller
     {
         private readonly UtilitiesContext context;
+        private PaymentService paymentService;
+        private int tenantN = 0, rateN = 0;
+        private string firstDateN = "01.01.0001", secondDateN = "01.01.3001";
+        private int pageN = 1;
+        private SortState sortOrderN = SortState.PaymentsIdAsc;
         private PaymentViewModel _payment = new PaymentViewModel
         {
             Type = "",
             Surname = ""
         };
 
-        public PaymentsController(UtilitiesContext context)
+        public PaymentsController(UtilitiesContext context, PaymentService paymentService)
         {
             this.context = context;
+            this.paymentService = paymentService;
         }
 
         [SetToSession("Payments")]
-        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "01.01.3001", int page = 1, SortState sortOrder = SortState.PaymentsIdAsc)
+        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "01.01.3001", int page = 1, SortState sortOrder = SortState.PaymentsIdAsc, string cacheKey = "NoCache")
         {
             var sessionOrganizations = HttpContext.Session.Get("Payments");
-            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "01.01.3001" && page == 1 && sortOrder == SortState.PaymentsIdAsc)
+            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "01.01.3001" && page == 1 && sortOrder == SortState.PaymentsIdAsc && cacheKey == "NoCache")
             {
                 if (sessionOrganizations.Keys.Contains("tenant"))
                     tenant = Convert.ToInt32(sessionOrganizations["tenant"]);
@@ -45,63 +52,11 @@ namespace Utilities.Controllers
                     page = Convert.ToInt32(sessionOrganizations["page"]);
                 if (sessionOrganizations.Keys.Contains("sortOrder"))
                     sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+                cacheKey = "PaymentsCache";
             }
-            DateTime first = Convert.ToDateTime(firstDate);
-            DateTime second = Convert.ToDateTime(secondDate);
-            int pageSize = 10;
-            IQueryable<Payment> source = context.Payments.Include(p => p.Tenant).Include(p => p.Rate);
-            if (tenant != null && tenant != 0)
-                source = source.Where(p => p.TenantId == tenant);
-            if (rate != null && rate != 0)
-                source = source.Where(p => p.RateId == rate);
-            if (firstDate != null || secondDate != null)
-            {
-                source = source.Where(p => p.DateOfPayment >= first && p.DateOfPayment <= second);
-            }
-            switch (sortOrder)
-            {
-                case SortState.PaymentsIdDesc:
-                    source = source.OrderByDescending(s => s.PaymentId);
-                    break;
-                case SortState.SurameOfTenantAsc:
-                    source = source.OrderBy(s => s.Tenant.Surname);
-                    break;
-                case SortState.SurnameOfTenantDesc:
-                    source = source.OrderByDescending(s => s.Tenant.Surname);
-                    break;
-                case SortState.TypeOfRateAsc:
-                    source = source.OrderBy(s => s.Rate.Type);
-                    break;
-                case SortState.TypeOfRateDesc:
-                    source = source.OrderByDescending(s => s.Rate.Type);
-                    break;
-                case SortState.PaymentsSumAsc:
-                    source = source.OrderBy(s => s.Sum);
-                    break;
-                case SortState.PaymentsSumDesc:
-                    source = source.OrderByDescending(s => s.Sum);
-                    break;
-                case SortState.DateOfPaymentsAsc:
-                    source = source.OrderBy(s => s.DateOfPayment);
-                    break;
-                case SortState.DateOfPaymentsDesc:
-                    source = source.OrderByDescending(s => s.DateOfPayment);
-                    break;
-                default:
-                    source = source.OrderBy(s => s.PaymentId);
-                    break;
-            }
-            var count = source.Count();
-            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            PaymentsViewModel payments = new PaymentsViewModel
-            {
-                Payments = items,
-                PaymentViewModel = _payment,
-                PageViewModel = pageViewModel,
-                SortViewModel = new PaymentsSortViewModel(sortOrder),
-                FilterViewModel = new PaymentsFilterViewModel(context.Tenants.ToList(), context.Rates.ToList(), tenant, rate, first, second)
-            };
+            if (cacheKey == "Edit")
+                cacheKey = "NoCache";
+            PaymentsViewModel payments = paymentService.GetPayments(tenant, rate, firstDate, secondDate, page, sortOrder, cacheKey);
             return View(payments);
         }
 
@@ -129,7 +84,20 @@ namespace Utilities.Controllers
             context.Payments.Update(payment);
             // сохраняем в бд все изменения
             context.SaveChanges();
-            return RedirectToAction("index");
+            var sessionOrganizations = HttpContext.Session.Get("Payments");
+            if (sessionOrganizations.Keys.Contains("tenant"))
+                tenantN = Convert.ToInt32(sessionOrganizations["tenant"]);
+            if (sessionOrganizations.Keys.Contains("rate"))
+                rateN = Convert.ToInt32(sessionOrganizations["rate"]);
+            if (sessionOrganizations.Keys.Contains("firstDate"))
+                firstDateN = sessionOrganizations["firstDate"];
+            if (sessionOrganizations.Keys.Contains("secondDate"))
+                secondDateN = sessionOrganizations["secondDate"];
+            if (sessionOrganizations.Keys.Contains("page"))
+                pageN = Convert.ToInt32(sessionOrganizations["page"]);
+            if (sessionOrganizations.Keys.Contains("sortOrder"))
+                sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+            return RedirectToAction("index", new { tenant = tenantN, rate = rateN, firstDate = firstDateN, secondDate = secondDateN, page = pageN, cacheKey = "Edit" });
         }
 
         [HttpGet]
@@ -171,7 +139,20 @@ namespace Utilities.Controllers
                 context.SaveChanges();
             }
             catch { }
-            return RedirectToAction("index"); ;
+            var sessionOrganizations = HttpContext.Session.Get("Payments");
+            if (sessionOrganizations.Keys.Contains("tenant"))
+                tenantN = Convert.ToInt32(sessionOrganizations["tenant"]);
+            if (sessionOrganizations.Keys.Contains("rate"))
+                rateN = Convert.ToInt32(sessionOrganizations["rate"]);
+            if (sessionOrganizations.Keys.Contains("firstDate"))
+                firstDateN = sessionOrganizations["firstDate"];
+            if (sessionOrganizations.Keys.Contains("secondDate"))
+                secondDateN = sessionOrganizations["secondDate"];
+            if (sessionOrganizations.Keys.Contains("page"))
+                pageN = Convert.ToInt32(sessionOrganizations["page"]);
+            if (sessionOrganizations.Keys.Contains("sortOrder"))
+                sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+            return RedirectToAction("index", new { tenant = tenantN, rate = rateN, firstDate = firstDateN, secondDate = secondDateN, page = pageN, cacheKey = "Edit" });
         }
 
         [HttpGet]
@@ -188,7 +169,20 @@ namespace Utilities.Controllers
         {
             context.Payments.Add(payment);
             context.SaveChanges();
-            return RedirectToAction("Index");
+            var sessionOrganizations = HttpContext.Session.Get("Payments");
+            if (sessionOrganizations.Keys.Contains("tenant"))
+                tenantN = Convert.ToInt32(sessionOrganizations["tenant"]);
+            if (sessionOrganizations.Keys.Contains("rate"))
+                rateN = Convert.ToInt32(sessionOrganizations["rate"]);
+            if (sessionOrganizations.Keys.Contains("firstDate"))
+                firstDateN = sessionOrganizations["firstDate"];
+            if (sessionOrganizations.Keys.Contains("secondDate"))
+                secondDateN = sessionOrganizations["secondDate"];
+            if (sessionOrganizations.Keys.Contains("page"))
+                pageN = Convert.ToInt32(sessionOrganizations["page"]);
+            if (sessionOrganizations.Keys.Contains("sortOrder"))
+                sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+            return RedirectToAction("index", new { tenant = tenantN, rate = rateN, firstDate = firstDateN, secondDate = secondDateN, page = pageN, cacheKey = "Edit" });
         }
     }
 }
