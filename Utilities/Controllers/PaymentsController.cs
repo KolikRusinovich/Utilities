@@ -35,10 +35,10 @@ namespace Utilities.Controllers
         }
 
         [SetToSession("Payments")]
-        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "01.01.3001", int page = 1, SortState sortOrder = SortState.PaymentsIdAsc, string cacheKey = "NoCache")
+        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "01.01.3001", int page = 0, SortState sortOrder = SortState.PaymentsIdAsc, string cacheKey = "NoCache")
         {
             var sessionOrganizations = HttpContext.Session.Get("Payments");
-            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "01.01.3001" && page == 1 && sortOrder == SortState.PaymentsIdAsc && cacheKey == "NoCache")
+            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "01.01.3001" && page == 0 && sortOrder == SortState.PaymentsIdAsc && cacheKey == "NoCache")
             {
                 if (sessionOrganizations.Keys.Contains("tenant"))
                     tenant = Convert.ToInt32(sessionOrganizations["tenant"]);

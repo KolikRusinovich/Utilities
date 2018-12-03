@@ -4,8 +4,10 @@
 @{
     ViewData["Title"] = "Платежи";
 }
-
-@Html.ActionLink("Create", "CreatePayment")
+@if (User.IsInRole("admin"))
+{
+     @Html.ActionLink("Create", "CreatePayment")
+}
 <form method="get">
     <div class="form-inline">
         <label class="control-label">Фамилия: </label>
@@ -61,16 +63,19 @@
     </tr>
     @foreach (var payment in Model.Payments)
     {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => payment.PaymentId)</td>
-            <td>@Html.DisplayFor(modelItem => payment.Tenant.Surname)</td>
-            <td>@Html.DisplayFor(modelItem => payment.Rate.Type)</td>
-            <td>@Html.DisplayFor(modelItem => payment.Sum)</td>
-            <td>@Html.DisplayFor(modelItem => payment.DateOfPayment)</td>
+    <tr>
+        <td>@Html.DisplayFor(modelItem => payment.PaymentId)</td>
+        <td>@Html.DisplayFor(modelItem => payment.Tenant.Surname)</td>
+        <td>@Html.DisplayFor(modelItem => payment.Rate.Type)</td>
+        <td>@Html.DisplayFor(modelItem => payment.Sum)</td>
+        <td>@Html.DisplayFor(modelItem => payment.DateOfPayment)</td>
+        @if (User.IsInRole("admin"))
+        {
             <td>
                 @Html.ActionLink("Edit", "EditPayment", new { id = payment.PaymentId }, null) |
                 @Html.ActionLink("Delete", "DeletePayment", new { id = payment.PaymentId }, null)
             </td>
+        }
         </tr>
     }
 </table>

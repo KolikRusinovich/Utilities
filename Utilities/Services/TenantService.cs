@@ -31,8 +31,10 @@ namespace Utilities.Services
                     cache.Remove("TenantsCache");
                     cacheKey = "TenantsCache";
                 }
-                //else cacheKey = "NoCache";
+            //else cacheKey = "NoCache";
             //}
+            if (page == 0)
+                page = 1;
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out tenants))
             {

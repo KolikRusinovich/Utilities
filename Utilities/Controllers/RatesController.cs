@@ -27,10 +27,10 @@ namespace Utilities.Controllers
             this.rateService = rateService;
         }
         [SetToSession("Rates")]
-        public IActionResult Index(string type, string firstDate = "01.01.1962" , string secondDate = "01.01.2040",int page = 1, SortState sortOrder = SortState.RateIdAsc, string cacheKey = "NoCache")
+        public IActionResult Index(string type, string firstDate = "01.01.1962" , string secondDate = "01.01.2040",int page = 0, SortState sortOrder = SortState.RateIdAsc, string cacheKey = "NoCache")
         {
             var sessionOrganizations = HttpContext.Session.Get("Rates");
-            if (sessionOrganizations != null && type == null && firstDate == "01.01.1962" && secondDate == "01.01.2040" && page == 1 && sortOrder == SortState.RateIdAsc && cacheKey == "NoCache")
+            if (sessionOrganizations != null && type == null && firstDate == "01.01.1962" && secondDate == "01.01.2040" && page == 0 && sortOrder == SortState.RateIdAsc && cacheKey == "NoCache")
             {
                 if (sessionOrganizations.Keys.Contains("type"))
                     type = sessionOrganizations["type"];

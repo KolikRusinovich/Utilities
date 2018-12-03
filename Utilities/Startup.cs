@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,12 @@ namespace Utilities
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UtilitiesContext>(options => options.UseSqlServer(connection));
             //services.AddTransient<ReadingService>();
-            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
@@ -65,6 +71,7 @@ namespace Utilities
             app.UseStaticFiles();
             app.UseSession();
             app.UseDbInitializer();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

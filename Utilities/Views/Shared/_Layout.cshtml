@@ -30,13 +30,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Tenants" asp-action="Index">Квартиросъёмщики</a></li>
-                    <li><a asp-area="" asp-controller="Readings" asp-action="Index">Показания</a></li>
-                    <li><a asp-area="" asp-controller="Rates" asp-action="Index">Счётчики</a></li>
-                    <li><a asp-area="" asp-controller="Payments" asp-action="Index">Платежи</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Tenants" asp-action="Index">Квартиросъёмщики</a></li>
+                        <li><a asp-area="" asp-controller="Readings" asp-action="Index">Показания</a></li>
+                        <li><a asp-area="" asp-controller="Rates" asp-action="Index">Счётчики</a></li>
+                        <li><a asp-area="" asp-controller="Payments" asp-action="Index">Платежи</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    }
+                    </ul>
             </div>
         </div>
     </nav>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Models;
@@ -10,6 +11,7 @@ using Utilities.ViewModels;
 
 namespace Utilities.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private UtilitiesContext _db;

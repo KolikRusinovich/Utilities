@@ -35,6 +35,8 @@ namespace Utilities.Services
             }
             // else cacheKey = "NoCache";
             //}
+            if (page == 0)
+                page = 1;
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out payments))
             {

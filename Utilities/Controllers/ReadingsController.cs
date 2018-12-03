@@ -35,10 +35,10 @@ namespace Utilities.Controllers
             this.readingService = readingService;
         }
         [SetToSession("Readings")]
-        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "10.01.2091",int page = 1, SortState sortOrder = SortState.ReadingIdAsc, string cacheKey = "NoCache")
+        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "10.01.2091",int page = 0, SortState sortOrder = SortState.ReadingIdAsc, string cacheKey = "NoCache")
         {
             var sessionOrganizations = HttpContext.Session.Get("Readings");
-            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "10.01.2091" && page == 1 && sortOrder == SortState.ReadingIdAsc && cacheKey == "NoCache")
+            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "10.01.2091" && page == 0 && sortOrder == SortState.ReadingIdAsc && cacheKey == "NoCache")
             {
                 if (sessionOrganizations.Keys.Contains("tenant"))
                     tenant = Convert.ToInt32(sessionOrganizations["tenant"]);

@@ -25,10 +25,10 @@ namespace Utilities.Controllers
             tenantService = service;
         }
         [SetToSession("Tenants")]
-        public IActionResult Index(string name, string surname, string patronymic, int page = 1,SortState sortOrder = SortState.TenantIdAsc, string cacheKey = "NoCache")
+        public IActionResult Index(string name, string surname, string patronymic, int page = 0,SortState sortOrder = SortState.TenantIdAsc, string cacheKey = "NoCache")
         {
             var sessionOrganizations = HttpContext.Session.Get("Tenants");
-            if (sessionOrganizations != null && name == null && surname == null && page == 1 && sortOrder == SortState.TenantIdAsc && cacheKey == "NoCache")
+            if (sessionOrganizations != null && name == null && surname == null && page == 0 && sortOrder == SortState.TenantIdAsc && cacheKey == "NoCache")
             {
                 if (sessionOrganizations.Keys.Contains("name"))
                     name = sessionOrganizations["name"];

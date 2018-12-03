@@ -4,62 +4,68 @@
 @{
     ViewData["Title"] = "Счётчики";
 }
-@Html.ActionLink("Create", "CreateRate")
-<form method="get">
-    <div class="form-inline">
-        <label class="control-label">Тип: </label>
-        @Html.TextBox("type", Model.FilterViewModel.SelectedType, htmlAttributes: new { @class = "form-control" })
-        <label class="control-label">Первая дата: </label>
-        @Html.TextBox("firstDate", Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"), htmlAttributes: new { @class = "form-control", @type = "date" })
-        <label class="control-label">вторая дата: </label>
-        @Html.TextBox("secondDate", Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"), htmlAttributes: new { @class = "form-control", @type = "date" })
-        <input type="submit" value="Фильтр" class="btn btn-default" />
-    </div>
-</form>
-<table class="table">
-    <tr>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.RateIdSort)"
-               asp-route-type="@(Model.FilterViewModel.SelectedType)"
-               asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
-               asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.RateId)</a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.TypeSort)"
-               asp-route-type="@(Model.FilterViewModel.SelectedType)"
-               asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
-               asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.Type)</a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.ValueSort)"
-               asp-route-type="@(Model.FilterViewModel.SelectedType)"
-               asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
-               asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.Value)</a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateOfIntroductionSort)"
-               asp-route-type="@(Model.FilterViewModel.SelectedType)"
-               asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
-               asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.DateOfIntroduction)</a>
-        </th>
-    </tr>
-    @foreach (var rate in Model.Rates)
-    {
+@if (User.IsInRole("admin"))
+{
+    @Html.ActionLink("Create", "CreateRate")
+}
+    <form method="get">
+        <div class="form-inline">
+            <label class="control-label">Тип: </label>
+            @Html.TextBox("type", Model.FilterViewModel.SelectedType, htmlAttributes: new { @class = "form-control" })
+            <label class="control-label">Первая дата: </label>
+            @Html.TextBox("firstDate", Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"), htmlAttributes: new { @class = "form-control", @type = "date" })
+            <label class="control-label">вторая дата: </label>
+            @Html.TextBox("secondDate", Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"), htmlAttributes: new { @class = "form-control", @type = "date" })
+            <input type="submit" value="Фильтр" class="btn btn-default" />
+        </div>
+    </form>
+    <table class="table">
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.RateIdSort)"
+                   asp-route-type="@(Model.FilterViewModel.SelectedType)"
+                   asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
+                   asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.RateId)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.TypeSort)"
+                   asp-route-type="@(Model.FilterViewModel.SelectedType)"
+                   asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
+                   asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.Type)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.ValueSort)"
+                   asp-route-type="@(Model.FilterViewModel.SelectedType)"
+                   asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
+                   asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.Value)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateOfIntroductionSort)"
+                   asp-route-type="@(Model.FilterViewModel.SelectedType)"
+                   asp-route-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
+                   asp-route-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))">@Html.DisplayNameFor(model => model.Rate.DateOfIntroduction)</a>
+            </th>
+        </tr>
+        @foreach (var rate in Model.Rates)
+        {
         <tr>
             <td>@Html.DisplayFor(modelItem => rate.RateId)</td>
             <td>@Html.DisplayFor(modelItem => rate.Type)</td>
             <td>@Html.DisplayFor(modelItem => rate.Value)</td>
             <td>@Html.DisplayFor(modelItem => rate.DateOfIntroduction)</td>
-            <td>
-                @Html.ActionLink("Edit", "EditRate", new { id = rate.RateId }, null) |
-                @Html.ActionLink("Delete", "DeleteRate", new { id = rate.RateId }, null)
-            </td>
-        </tr>
+            @if (User.IsInRole("admin"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "EditRate", new { id = rate.RateId }, null) |
+                    @Html.ActionLink("Delete", "DeleteRate", new { id = rate.RateId }, null)
+                </td>
+            }
+            </tr>
 
-    }
-</table>
-<page-link page-model="Model.PageViewModel" page-action="Index"
-           page-url-type="@(Model.FilterViewModel.SelectedType)"
-           page-url-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
-           page-url-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))"
-           page-url-sortOrder="@(Model.SortViewModel.Current)"></page-link>
+        }
+    </table>
+    <page-link page-model="Model.PageViewModel" page-action="Index"
+               page-url-type="@(Model.FilterViewModel.SelectedType)"
+               page-url-firstDate="@(Model.FilterViewModel.SelectedFirstDate.Date.ToString("yyyy-dd-MM"))"
+               page-url-secondDate="@(Model.FilterViewModel.SelectedSecondDate.Date.ToString("yyyy-dd-MM"))"
+               page-url-sortOrder="@(Model.SortViewModel.Current)"></page-link>

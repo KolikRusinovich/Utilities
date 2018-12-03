@@ -33,8 +33,10 @@ namespace Utilities.Services
                     cache.Remove("RateCache");
                     cacheKey = "RateCache";
                 }
-                //else cacheKey = "NoCache";
+            //else cacheKey = "NoCache";
             //}
+            if (page == 0)
+                page = 1;
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out rates))
             {
