@@ -107,7 +107,7 @@ namespace Utilities.Services
                     Tenants = items,
                     PageViewModel = pageViewModel,
                     SortViewModel = new SortViewModel(sortOrder),
-                    FilterViewModel = new FilterViewModel(name, surname, patronymic),
+                    FilterViewModel = new TenantsFilterViewModel(name, surname, patronymic),
                 };
                 if (tenants != null)
                 {

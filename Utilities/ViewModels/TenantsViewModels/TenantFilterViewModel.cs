@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Utilities.Models;
+using Utilities.ViewModels.ProcedureViewModels;
 
 namespace Utilities.ViewModels
 {
-    public class FilterViewModel
+    public class TenantsFilterViewModel
     {
-        public FilterViewModel(string name,string surname, string patronymic)
+        public TenantsFilterViewModel(string name,string surname, string patronymic)
         {
             SelectedName = name;
             SelectedSurname = surname;

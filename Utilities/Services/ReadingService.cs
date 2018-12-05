@@ -26,15 +26,15 @@ namespace Utilities.Services
         {
             ReadingsViewModel readings = null;
             myKey = myKey + tenant + rate + firstDate + secondDate + page + sortOrder;
-           /* if (cacheKey != "ReadingsCache")
-            {*/
+            if (cacheKey != "ReadingsCache")
+            {
                 if (lastKey != myKey)
                 {
                     cache.Remove("ReadingsCache");
                     cacheKey = "ReadingsCache";
                 }
-            // else cacheKey = "NoCache";
-            //}
+             else cacheKey = "NoCache";
+            }
             if (page == 0)
                 page = 1;
             lastKey = myKey;

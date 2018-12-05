@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Utilities.Models;
 using Utilities.Services;
 using Utilities.ViewModels;
 using Utilities.ViewModels.PaymentsViewModels;
+using Utilities.ViewModels.ProcedureViewModels;
 
 namespace Utilities.Controllers
 {
@@ -58,6 +60,53 @@ namespace Utilities.Controllers
                 cacheKey = "NoCache";
             PaymentsViewModel payments = paymentService.GetPayments(tenant, rate, firstDate, secondDate, page, sortOrder, cacheKey);
             return View(payments);
+        }
+
+        public async Task<IActionResult> Information(string d0 = "01.01.1970", string d = "01.01.2030", int page = 1)
+        {
+            DateTime firstDate, secondDate;
+            int pageSize = 10;  // количество элементов на странице
+            List<object[]> source = new List<object[]>();
+            firstDate = Convert.ToDateTime(d0);
+            secondDate = Convert.ToDateTime(d);
+            using (var command = context.Database.GetDbConnection().CreateCommand())
+            {
+                DbParameter parameter = command.CreateParameter();
+                parameter.DbType = System.Data.DbType.DateTime;
+                parameter.ParameterName = "@FirstDate";
+                parameter.Value = firstDate;
+                command.Parameters.Add(parameter);
+                DbParameter parameter2 = command.CreateParameter();
+                parameter2.DbType = System.Data.DbType.DateTime;
+                parameter2.ParameterName = "@SecondDate";
+                parameter2.Value = secondDate;
+                command.Parameters.Add(parameter2);
+                command.CommandText = "Information";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Connection.Open();
+                DbDataReader reader = await command.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        object[] item = new object[reader.FieldCount];
+                        reader.GetValues(item);
+                        source.Add(item);
+                    }
+                }
+                command.Connection.Close();
+            }
+            var count = source.Count;
+            var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            ProcedureViewModel viewModel = new ProcedureViewModel
+            {
+                FilterViewModel = new FilterViewModel(source, d0, d),
+                PageViewModel = pageViewModel,
+                Objects = items,
+            };
+            return View(viewModel);
         }
 
 

@@ -12,6 +12,6 @@ namespace Utilities.ViewModels
         public Tenant Tenant { get; set; }
         public PageViewModel PageViewModel { get; set; }
         public SortViewModel SortViewModel { get; set; }
-        public FilterViewModel FilterViewModel { get; set; }
+        public TenantsFilterViewModel FilterViewModel { get; set; }
     }
 }

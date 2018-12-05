@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Utilities.Controllers.PaymentsController">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACIAgAIAAAhAAAAAIAEAAAAEAAAAAAEAEAACAAAAA=</HashCode>
+      <FileName>Controllers\PaymentsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Controllers.RatesController">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAACIAAAAAAAAIAAEAAAAAAAAAAAQAAAAAEAACBAAAI=</HashCode>
+      <FileName>Controllers\RatesController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Controllers.ReadingsController">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAACIABAAAACAAAAAAgAEAAAAAAAIAAAEAEAACAAQAA=</HashCode>
+      <FileName>Controllers\ReadingsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Controllers.TenantsController">
+    <Position X="9.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBACAAAAAAQBgAAAAAAAAAAAAABAQQAAIAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\TenantsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Controllers.AccountController">
+    <Position X="9.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAIAAAABAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Infrastructure.Filtres.SetToSessionAttribute" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Filtres\SetToSessionAttribute.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Utilities.Infrastructure.SessionExtensions" Collapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\SessionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Infrastructure.Transformations" Collapsed="true">
+    <Position X="25.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\Transformations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.LoginModel" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\LoginModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.Payment">
+    <Position X="2.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAAAAoAAAEAAQ=</HashCode>
+      <FileName>Models\Payment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Rate" />
+      <Property Name="Tenant" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Models.Rate">
+    <Position X="5.75" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAIAAAAAAAAAAQBoAAAAAAA=</HashCode>
+      <FileName>Models\Rate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.Reading">
+    <Position X="8.75" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABAAAAAAAAAAAAAAAAAAAAACAAAAAAAAoAAIFEAA=</HashCode>
+      <FileName>Models\Reading.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Rate" />
+      <Property Name="Tenant" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Models.RegisterModel" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAIAA=</HashCode>
+      <FileName>Models\RegisterModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.Role" Collapsed="true">
+    <Position X="25.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.Tenant">
+    <Position X="5.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAARgEAAAAAACAAAABAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Models\Tenant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.User" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIAACAAAAAAEAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Models.UtilitiesContext">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAABAAIAAAAAAAAAAEggAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Models\UtilitiesContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.Services.PaymentService">
+    <Position X="6.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACQACAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\PaymentService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Services.RateService">
+    <Position X="2.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAACAAABAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RateService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Services.ReadingService">
+    <Position X="3.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAGAACAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ReadingService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.Services.TenantService">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAACAAABAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Services\TenantService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.ViewModels.PaymentViewModel" Collapsed="true">
+    <Position X="19.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAABAAAABAAAQAAAAAAAAQ=</HashCode>
+      <FileName>ViewModels\PaymentsViewModels\PaymentViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.PaymentsViewModel">
+    <Position X="16.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAABAAAAAAAAACAAAAAAAAABEAAAAAAAAAgA=</HashCode>
+      <FileName>ViewModels\PaymentsViewModels\PaymentsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PageViewModel" />
+      <Property Name="FilterViewModel" />
+      <Property Name="PaymentViewModel" />
+      <Property Name="SortViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.ViewModels.PaymentsViewModels.PaymentsSortViewModel" Collapsed="true">
+    <Position X="16.75" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAgAAgAAACAAAAAAAAAABAAAAAAAAAAACA=</HashCode>
+      <FileName>ViewModels\PaymentsViewModels\PaymentsSortViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.PaymentsViewModels.PaymentsFilterViewModel">
+    <Position X="13.75" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAIAgAAQAAAAAAAgAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PaymentsViewModels\PaymentsFilterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.PageViewModel">
+    <Position X="13.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAgAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.RatesViewModels.RatesFilterViewModel">
+    <Position X="16.75" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAABAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\RatesViewModels\RatesFilterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.RatesViewModels.RatesSortViewModel">
+    <Position X="10.75" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAgBAACAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\RatesViewModels\RatesSortViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.RatesViewModel">
+    <Position X="13.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAAAAAAAAAAAACAAAAAgAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\RatesViewModels\RatesViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FilterViewModel" />
+      <Property Name="PageViewModel" />
+      <Property Name="SortViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.ViewModels.ReadingsViewModels.ReadingsFilterViewModel">
+    <Position X="16.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAIAgAAQAAAAAAAgAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ReadingsViewModels\ReadingsFilterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.ReadingsViewModels.ReadingSortViewModel">
+    <Position X="16.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAgAQgAAACAAAAAAAABAAAABAAAAAAAACA=</HashCode>
+      <FileName>ViewModels\ReadingsViewModels\ReadingSortViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.ReadingsViewModel">
+    <Position X="13.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAACABAAAAAAABEAABAAAAAAgA=</HashCode>
+      <FileName>ViewModels\ReadingsViewModels\ReadingsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FilterViewModel" />
+      <Property Name="PageViewModel" />
+      <Property Name="ReadingViewModel" />
+      <Property Name="SortViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Utilities.ViewModels.ReadingViewModel">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAABACAAAAAAQAAAAIBEAA=</HashCode>
+      <FileName>ViewModels\ReadingsViewModels\ReadingViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.FilterViewModel">
+    <Position X="19.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TenantsViewModels\FilterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.SortViewModel">
+    <Position X="19.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACwAAABCAAAAAAAAAAAQAAgAAAAAAACA=</HashCode>
+      <FileName>ViewModels\TenantsViewModels\SortViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.ViewModels.TenantsViewModel">
+    <Position X="16.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAIAAAAAACAAAAAAAAAAEAAAAAAAEAAA=</HashCode>
+      <FileName>ViewModels\TenantsViewModels\TenantsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SortViewModel" />
+      <Property Name="PageViewModel" />
+      <Property Name="FilterViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

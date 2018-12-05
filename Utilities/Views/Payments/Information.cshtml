@@ -1,0 +1,62 @@
+﻿@using Utilities.ViewModels
+@using Utilities.ViewModels.ProcedureViewModels
+@model ProcedureViewModel
+
+@addTagHelper "*, Utilities"
+@{
+    ViewData["Title"] = "Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Информация о должниках</h2>
+<form method="get">
+    <div class="form-inline">
+        <table>
+            <tr>
+                <td><label class="control-label">Дата начала периода: </label></td>
+                <td>
+                    @Html.TextBox("d0", Model.FilterViewModel.FirstDate,
+                    htmlAttributes: new { @class = "form-control", @type = "date"})
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Дата окончания периода: </label></td>
+                <td>
+                    @Html.TextBox("d", Model.FilterViewModel.SecondDate,
+                    htmlAttributes: new { @class = "form-control", @type = "date"})
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Применить" class="btn btn-default" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Номер квартиры</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Сумма</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (object[] u in Model.Objects)
+        {
+        <tr>
+            <td>@u[0]</td>
+            <td>@u[1]</td>
+            <td>@u[2]</td>
+            <td>@u[3]</td>
+            <td>@u[4]</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<page-link page-model="Model.PageViewModel" page-action="Information"
+           page-url-firstDate="@(Model.FilterViewModel.FirstDate)"
+           page-url-secondDate="@(Model.FilterViewModel.SecondDate)"></page-link>

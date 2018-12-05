@@ -26,15 +26,15 @@ namespace Utilities.Services
         {
             PaymentsViewModel payments = null;
             myKey = myKey + tenant + rate + firstDate + secondDate + page + sortOrder;
-            /* if (cacheKey != "ReadingsCache")
-             {*/
-            if (lastKey != myKey)
+            if (cacheKey != "ReadingsCache")
             {
-                cache.Remove("PaymentsCache");
-                cacheKey = "PaymentsCache";
+                if (lastKey != myKey)
+                {
+                    cache.Remove("PaymentsCache");
+                    cacheKey = "PaymentsCache";
+                }
+                 else cacheKey = "NoCache";
             }
-            // else cacheKey = "NoCache";
-            //}
             if (page == 0)
                 page = 1;
             lastKey = myKey;
