@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Infrastructure;
@@ -100,6 +101,7 @@ namespace Utilities.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult EditRate(int? id)
         {
             Rate rate = context.Rates.Find(id);
@@ -109,7 +111,9 @@ namespace Utilities.Controllers
         [HttpPost]
         public ActionResult EditRate(Rate rate)
         {
-            context.Rates.Update(rate);
+            if (ModelState.IsValid)
+            {
+                context.Rates.Update(rate);
             // сохраняем в бд все изменения
             context.SaveChanges();
             var sessionOrganizations = HttpContext.Session.Get("Rates");
@@ -124,9 +128,13 @@ namespace Utilities.Controllers
             if (sessionOrganizations.Keys.Contains("sortOrder"))
                 sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
             return RedirectToAction("Index", new { type = typeN, firstDate = firstDateN, secondDate = secondDateN, page = pageN, sortOrder = sortOrderN, cacheKey = "Edit" });
+            }
+            else
+                return View(rate);
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [ActionName("DeleteRate")]
         public ActionResult ConfirmDeleteRate(int id)
         {
@@ -164,6 +172,7 @@ namespace Utilities.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateRate()
         {
             return View();
@@ -171,20 +180,25 @@ namespace Utilities.Controllers
         [HttpPost]
         public ActionResult CreateRate(Rate rate)
         {
-            context.Rates.Add(rate);
-            context.SaveChanges();
-            var sessionOrganizations = HttpContext.Session.Get("Rates");
-            if (sessionOrganizations.Keys.Contains("type"))
-                typeN = sessionOrganizations["type"];
-            if (sessionOrganizations.Keys.Contains("firstDate"))
-                firstDateN = sessionOrganizations["firstDate"];
-            if (sessionOrganizations.Keys.Contains("secondDate"))
-                secondDateN = sessionOrganizations["secondDate"];
-            if (sessionOrganizations.Keys.Contains("page"))
-                pageN = Convert.ToInt32(sessionOrganizations["page"]);
-            if (sessionOrganizations.Keys.Contains("sortOrder"))
-                sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
-            return RedirectToAction("Index", new { type = typeN, firstDate = firstDateN, secondDate = secondDateN,page = pageN, sortOrder = sortOrderN, cacheKey = "Edit"});
-        }
+            if(ModelState.IsValid)
+            {
+                context.Rates.Add(rate);
+                context.SaveChanges();
+                var sessionOrganizations = HttpContext.Session.Get("Rates");
+                if (sessionOrganizations.Keys.Contains("type"))
+                    typeN = sessionOrganizations["type"];
+                if (sessionOrganizations.Keys.Contains("firstDate"))
+                    firstDateN = sessionOrganizations["firstDate"];
+                if (sessionOrganizations.Keys.Contains("secondDate"))
+                    secondDateN = sessionOrganizations["secondDate"];
+                if (sessionOrganizations.Keys.Contains("page"))
+                    pageN = Convert.ToInt32(sessionOrganizations["page"]);
+                if (sessionOrganizations.Keys.Contains("sortOrder"))
+                    sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+                return RedirectToAction("Index", new { type = typeN, firstDate = firstDateN, secondDate = secondDateN,page = pageN, sortOrder = sortOrderN, cacheKey = "Edit"});
+            }
+            else
+                return View(rate);
+    }
     }
 }

@@ -19,6 +19,7 @@ namespace Utilities.ViewModels
         public string Type { get; set; }
 
         [Display(Name = "Сумма")]
+        [Required(ErrorMessage = "Не указана сумма")]
         public int Sum { get; set; }
 
         [Display(Name = "Дата платежа")]

@@ -24,15 +24,15 @@ namespace Utilities.Services
         {
             TenantsViewModel tenants = null;
             myKey = myKey + name + surname + patronymic + page + sortOrder;
-            //if (cacheKey != "TenantsCache")
-            //{
+            if (cacheKey != "TenantsCache")
+            {
                 if (lastKey != myKey)
                 {
                     cache.Remove("TenantsCache");
                     cacheKey = "TenantsCache";
                 }
-            //else cacheKey = "NoCache";
-            //}
+            else cacheKey = "NoCache";
+            }
             if (page == 0)
                 page = 1;
             lastKey = myKey;

@@ -12,9 +12,12 @@ namespace Utilities.Models
         [Display(Name = "Код показания")]
         public int RateId { get; set; }
         [Display(Name = "Тип счётчика")]
+        [Required(ErrorMessage = "Не указан тип")]
         public string Type { get; set; }
+        [Required(ErrorMessage = "Не указано значение")]
         [Display(Name = "Значение")]
         public int Value { get; set; }
+        [Required(ErrorMessage = "Не указана дата ввода")]
         [Display(Name = "Дата ввода")]
         [DataType(DataType.Date)]
         public DateTime DateOfIntroduction { get; set; }

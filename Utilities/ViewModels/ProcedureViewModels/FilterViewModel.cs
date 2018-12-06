@@ -19,16 +19,6 @@ namespace Utilities.ViewModels.ProcedureViewModels
         public string FirstDate { get; private set; }
         public string SecondDate { get; private set; }
 
-        public FilterViewModel(List<Rate> rates, List<Tenant> tenants, int? rate, int? tenant)
-        {
-            tenants.Insert(0, new Tenant { TenantId = 0, Surname = "Все" });
-            rates.Insert(0, new Rate { Type = "Все", RateId = 0 });
-            Rates = new SelectList(rates, "RateId", "Type", rate);
-            Tenants = new SelectList(tenants, "TenantId", "Surname", tenant);
-            SelectedRate = rate;
-            SelectedTenant = tenant;
-        }
-
         public FilterViewModel(List<object[]> objects, string d0, string d)
         {
             objects.Insert(0, new object[] { "", "" });

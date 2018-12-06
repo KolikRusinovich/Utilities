@@ -26,23 +26,37 @@ namespace Utilities.Services
         {
             RatesViewModel rates = null;
             myKey = type + firstDate + secondDate + page + sortOrder;
-            /*if (cacheKey != "RateCache")
-            {*/
+            if (cacheKey != "RateCache")
+            {
                 if (lastKey != myKey)
                 {
                     cache.Remove("RateCache");
                     cacheKey = "RateCache";
                 }
-            //else cacheKey = "NoCache";
-            //}
+            else cacheKey = "NoCache";
+            }
             if (page == 0)
                 page = 1;
             lastKey = myKey;
             if (!cache.TryGetValue(cacheKey, out rates))
             {
                 DateTime first, second;
-                first = DateTime.Parse(firstDate);
-                second = DateTime.Parse(secondDate);
+                try
+                {
+                    first = Convert.ToDateTime(firstDate);
+                }
+                catch
+                {
+                    first = Convert.ToDateTime("01.01.1962");
+                }
+                try
+                {
+                    second = Convert.ToDateTime(secondDate);
+                }
+                catch
+                {
+                    second = Convert.ToDateTime("10.01.2040");
+                }
                 int pageSize = 10;
                 IQueryable<Rate> source = context.Rates;
                 if (!String.IsNullOrEmpty(type))

@@ -24,9 +24,10 @@ namespace Utilities.Services
 
         public PaymentsViewModel GetPayments(int? tenant, int? rate, string firstDate, string secondDate, int page, SortState sortOrder, string cacheKey)
         {
+            DateTime first, second;
             PaymentsViewModel payments = null;
             myKey = myKey + tenant + rate + firstDate + secondDate + page + sortOrder;
-            if (cacheKey != "ReadingsCache")
+            if (cacheKey != "PaymentsCache")
             {
                 if (lastKey != myKey)
                 {
@@ -45,8 +46,22 @@ namespace Utilities.Services
                     Type = "",
                     Surname = ""
                 };
-                DateTime first = Convert.ToDateTime(firstDate);
-                DateTime second = Convert.ToDateTime(secondDate);
+                try
+                {
+                    first = Convert.ToDateTime(firstDate);
+                }
+                catch
+                {
+                    first = Convert.ToDateTime("01.01.1981");
+                }
+                try
+                {
+                    second = Convert.ToDateTime(secondDate);
+                }
+                catch
+                {
+                    second = Convert.ToDateTime("10.01.2091");
+                }
                 int pageSize = 10;
                 IQueryable<Payment> source = context.Payments.Include(p => p.Tenant).Include(p => p.Rate);
                 if (tenant != null && tenant != 0)

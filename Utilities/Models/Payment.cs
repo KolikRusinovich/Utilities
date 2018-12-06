@@ -15,6 +15,7 @@ namespace Utilities.Models
         public int TenantId { get; set; }
         [Display(Name = "Код счётчика")]
         public int RateId { get; set; }
+        [Required(ErrorMessage = "Не указана сумма")]
         [Display(Name = "Сумма")]
         public int Sum { get; set; }
         [Display(Name = "Дата платежа")]

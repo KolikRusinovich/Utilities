@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace Utilities.Controllers
         private readonly UtilitiesContext context;
         private PaymentService paymentService;
         private int tenantN = 0, rateN = 0;
-        private string firstDateN = "01.01.0001", secondDateN = "01.01.3001";
+        private string firstDateN = "01.01.1981", secondDateN = "10.01.2091";
         private int pageN = 1;
         private SortState sortOrderN = SortState.PaymentsIdAsc;
         private PaymentViewModel _payment = new PaymentViewModel
@@ -37,10 +38,10 @@ namespace Utilities.Controllers
         }
 
         [SetToSession("Payments")]
-        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.0001", string secondDate = "01.01.3001", int page = 0, SortState sortOrder = SortState.PaymentsIdAsc, string cacheKey = "NoCache")
+        public IActionResult Index(int? tenant, int? rate, string firstDate = "01.01.1981", string secondDate = "10.01.2091", int page = 0, SortState sortOrder = SortState.PaymentsIdAsc, string cacheKey = "NoCache")
         {
             var sessionOrganizations = HttpContext.Session.Get("Payments");
-            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.0001" && secondDate == "01.01.3001" && page == 0 && sortOrder == SortState.PaymentsIdAsc && cacheKey == "NoCache")
+            if (sessionOrganizations != null && tenant == null && rate == null && firstDate == "01.01.1981" && secondDate == "10.01.2091" && page == 0 && sortOrder == SortState.PaymentsIdAsc && cacheKey == "NoCache")
             {
                 if (sessionOrganizations.Keys.Contains("tenant"))
                     tenant = Convert.ToInt32(sessionOrganizations["tenant"]);
@@ -111,6 +112,7 @@ namespace Utilities.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult EditPayment(int? id)
         {
             var paymentContext = context.Payments.Include(p => p.Tenant).Include(p => p.Rate);
@@ -150,6 +152,7 @@ namespace Utilities.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [ActionName("DeletePayment")]
         public ActionResult ConfirmDeletePayment(int id)
         {
@@ -205,6 +208,7 @@ namespace Utilities.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult CreatePayment()
         {
             var tenants = new SelectList(context.Tenants, "TenantId", "Surname"); ;

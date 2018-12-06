@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Utilities.Infrastructure;
 using Utilities.Infrastructure.Filtres;
@@ -49,6 +50,7 @@ namespace Utilities.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult EditTenant(int? id)
         {
             Tenant tenant = context.Tenants.Find(id);
@@ -58,23 +60,29 @@ namespace Utilities.Controllers
         [HttpPost]
         public ActionResult EditTenant(Tenant tenant)
         {
-            context.Tenants.Update(tenant);
-            context.SaveChanges();
-            var sessionOrganizations = HttpContext.Session.Get("Tenants");
-            if (sessionOrganizations.Keys.Contains("name"))
-                nameN = sessionOrganizations["name"];
-            if (sessionOrganizations.Keys.Contains("surname"))
-                surnameN = sessionOrganizations["surname"];
-            if (sessionOrganizations.Keys.Contains("patronymic"))
-                patronymicN = sessionOrganizations["patronymic"];
-            if (sessionOrganizations.Keys.Contains("page"))
-                pageN = Convert.ToInt32(sessionOrganizations["page"]);
-            if (sessionOrganizations.Keys.Contains("sortOrder"))
-                sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
-            return RedirectToAction("index", new { name = nameN, surname = surnameN, patronymic = patronymicN, page = pageN, sortOrder = sortOrderN, cacheKey = "Edit"});
+            if (ModelState.IsValid)
+            {
+                context.Tenants.Update(tenant);
+                context.SaveChanges();
+                var sessionOrganizations = HttpContext.Session.Get("Tenants");
+                if (sessionOrganizations.Keys.Contains("name"))
+                    nameN = sessionOrganizations["name"];
+                if (sessionOrganizations.Keys.Contains("surname"))
+                    surnameN = sessionOrganizations["surname"];
+                if (sessionOrganizations.Keys.Contains("patronymic"))
+                    patronymicN = sessionOrganizations["patronymic"];
+                if (sessionOrganizations.Keys.Contains("page"))
+                    pageN = Convert.ToInt32(sessionOrganizations["page"]);
+                if (sessionOrganizations.Keys.Contains("sortOrder"))
+                    sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+                return RedirectToAction("index", new { name = nameN, surname = surnameN, patronymic = patronymicN, page = pageN, sortOrder = sortOrderN, cacheKey = "Edit" });
+            }
+            else
+                return View(tenant);
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [ActionName("DeleteTenant")]
         public ActionResult ConfirmDeleteTenant(int id)
         {
@@ -112,6 +120,7 @@ namespace Utilities.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateTenant()
         {
             return View();
@@ -119,20 +128,25 @@ namespace Utilities.Controllers
         [HttpPost]
         public ActionResult CreateTenant(Tenant tenant)
         {
-            context.Tenants.Add(tenant);
-            context.SaveChanges();
-            var sessionOrganizations = HttpContext.Session.Get("Tenants");
-            if (sessionOrganizations.Keys.Contains("name"))
-                nameN = sessionOrganizations["name"];
-            if (sessionOrganizations.Keys.Contains("surname"))
-                surnameN = sessionOrganizations["surname"];
-            if (sessionOrganizations.Keys.Contains("patronymic"))
-                patronymicN = sessionOrganizations["patronymic"];
-            if (sessionOrganizations.Keys.Contains("page"))
-                pageN = Convert.ToInt32(sessionOrganizations["page"]);
-            if (sessionOrganizations.Keys.Contains("sortOrder"))
-                sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
-            return RedirectToAction("index", new { name = nameN, surname = surnameN, patronymic = patronymicN, page = pageN, sortOrder = sortOrderN, cacheKey = "Edit" });
+            if (ModelState.IsValid)
+            {
+                context.Tenants.Add(tenant);
+                context.SaveChanges();
+                var sessionOrganizations = HttpContext.Session.Get("Tenants");
+                if (sessionOrganizations.Keys.Contains("name"))
+                    nameN = sessionOrganizations["name"];
+                if (sessionOrganizations.Keys.Contains("surname"))
+                    surnameN = sessionOrganizations["surname"];
+                if (sessionOrganizations.Keys.Contains("patronymic"))
+                    patronymicN = sessionOrganizations["patronymic"];
+                if (sessionOrganizations.Keys.Contains("page"))
+                    pageN = Convert.ToInt32(sessionOrganizations["page"]);
+                if (sessionOrganizations.Keys.Contains("sortOrder"))
+                    sortOrderN = (SortState)Enum.Parse(typeof(SortState), sessionOrganizations["sortOrder"]);
+                return RedirectToAction("index", new { name = nameN, surname = surnameN, patronymic = patronymicN, page = pageN, sortOrder = sortOrderN, cacheKey = "Edit" });
+            }
+            else
+                return View(tenant);
         }
     }
 }
